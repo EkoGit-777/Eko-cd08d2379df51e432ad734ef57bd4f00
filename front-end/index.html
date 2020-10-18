@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <script src="jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            function doDate()
+            {
+                var str = "";
+                var now = new Date();
+                str += (now.getHours()<10?"0"+now.getHours():now.getHours()) +":" + (now.getMinutes()<10?"0"+now.getMinutes():now.getMinutes()) + ":" + (now.getSeconds()<10?"0"+now.getSeconds():now.getSeconds());
+                document.getElementById("waktu").innerHTML = str;
+            }
+
+            setInterval(doDate, 1000);
+
+            $("button").click(function(){
+                $.get("../back-end/cek.php", function(data, status){
+                    var result = JSON.parse(data);
+                    if(result['status']=="sukses") {
+                        alert("Hai " + result['username'] + ", waktu login anda " + result['waktu']);
+                    }else{
+                        window.location.href = 'login.html';
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<h1 id="waktu" style="text-align: center"></h1>
+<div class="wrapper" style="text-align: center">
+    <button>Hello</button>
+</div>
+</body>
+</html>
